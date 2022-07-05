@@ -1,0 +1,72 @@
+﻿@model List<PartyManagementSystem.ViewModels.RoomViewModel>
+@{
+    ViewBag.Title = "Index";
+    var gridID = "Room";
+    var user = (PartyManagementSystem.ViewModels.UserViewModel) Session["User"];
+}
+<div class="p-5 pb-2 mb-4 bg-light">
+    <h1>我的包廂</h1>
+    <hr />
+    <div class="container py-5">
+        @using(Html.BeginForm("Grid", "Room", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-12 col-md-2">
+                    @Html.Label("RoomID", "包廂ID", new { @class = "col-form-label fw-bold" })
+                </div>
+                <div class="col-12 col-md-4">     
+                    <input type="text" id="RoomID" class="form-control" placeholder="輸入房間ID (例: 9527)" />                    
+                </div>
+                <button id="btnSearchRoom" type="submit" class="btn btn-primary mx-auto mx-md-2 my-3 my-md-0 col-8 col-md-2 ms-md-auto">搜尋</button>
+                <button id="btnCreateRoom" type="button" class="btn btn-success mx-auto mx-md-2 my-3 my-md-0 col-8 col-md-2 ms-md-auto">建立包廂</button>                
+            </div>
+        }
+    </div>
+</div>
+@if(user != null)
+{
+    <div class="@(gridID)Container"></div>
+}
+
+
+<script>
+    @if (user != null)
+    {
+        <text>
+            var @(gridID)_Load = function (roomID = "") {
+                $.post({
+                    url: "@Url.Action("Grid","Room")",
+                    data: {
+                        roomID: roomID,
+                        userID: "@user.UserID",
+                    },
+                    success: function (res) {
+                        $(".@(gridID)Container").html(res);
+                    }
+                })
+            }
+            @(gridID)_Load();
+        </text>
+    }
+    else
+    {
+        <text>
+            swal.Show(swal.Icon.warning, "操作逾時，請重新登入").then(()=> {
+                window.location.href = "@Url.Action("SignIn", "Security")";
+            })
+        </text>
+    }
+
+
+
+
+    $("#btnCreateRoom").on("click", function (e) {
+        window.location.href="@Url.Action("Create","Room")"
+    })
+
+    $("#btnSearchRoom").on("click", function (e) {
+        e.preventDefault();
+        var roomID = $("#RoomID").val();
+        @(gridID)_Load(roomID)
+    })
+</script>

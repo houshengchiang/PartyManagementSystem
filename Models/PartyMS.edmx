@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PartyManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_OrderList">
+          <Key>
+            <PropertyRef Name="SerialNo" />
+          </Key>
+          <Property Name="SerialNo" Type="bigint" Nullable="false" />
+          <Property Name="OrderItem" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="RoomId" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sponsor" Type="nvarchar" MaxLength="50" />
+          <Property Name="CanceledTime" Type="datetime2" Precision="3" />
+          <Property Name="isServed" Type="bit" />
+          <Property Name="isCanceled" Type="bit" />
+          <Property Name="CreateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UpdateUser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="T_Reference">
+          <Key>
+            <PropertyRef Name="RID" />
+          </Key>
+          <Property Name="RID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoryCode" Type="smallint" Nullable="false" />
+          <Property Name="ZHName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Room">
+          <Key>
+            <PropertyRef Name="unid" />
+          </Key>
+          <Property Name="unid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoomID" Type="varchar" MaxLength="7" />
+          <Property Name="RoomName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="RoomSecret" Type="varchar" MaxLength="32" />
+          <Property Name="UserCount" Type="smallint" />
+          <Property Name="CreateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="ModifyUser" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_RoomDetail">
+          <Key>
+            <PropertyRef Name="RoomID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="RoomID" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserLevel" Type="tinyint" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="ModifyUser" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'PartyManagement.dbo.T_User' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="T_User">
+          <Key>
+            <PropertyRef Name="unid" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Secret" />
+            <PropertyRef Name="CreateDate" />
+            <PropertyRef Name="ModifyTime" />
+          </Key>
+          <Property Name="unid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="320" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Secret" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Nickname" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime2" Precision="3" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="PartyManagementModelStoreContainer">
+          <EntitySet Name="T_OrderList" EntityType="Self.T_OrderList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Reference" EntityType="Self.T_Reference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Room" EntityType="Self.T_Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_RoomDetail" EntityType="Self.T_RoomDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_User" EntityType="Self.T_User" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [T_User].[unid] AS [unid], 
+    [T_User].[Email] AS [Email], 
+    [T_User].[UserId] AS [UserId], 
+    [T_User].[Secret] AS [Secret], 
+    [T_User].[Nickname] AS [Nickname], 
+    [T_User].[CreateDate] AS [CreateDate], 
+    [T_User].[ModifyTime] AS [ModifyTime]
+    FROM [dbo].[T_User] AS [T_User]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PartyManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_OrderList">
+          <Key>
+            <PropertyRef Name="SerialNo" />
+          </Key>
+          <Property Name="SerialNo" Type="Int64" Nullable="false" />
+          <Property Name="OrderItem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="RoomId" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sponsor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CanceledTime" Type="DateTime" Precision="3" />
+          <Property Name="isServed" Type="Boolean" />
+          <Property Name="isCanceled" Type="Boolean" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UpdateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UpdateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="T_Reference">
+          <Key>
+            <PropertyRef Name="RID" />
+          </Key>
+          <Property Name="RID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CategoryCode" Type="Int16" Nullable="false" />
+          <Property Name="ZHName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_Room">
+          <Key>
+            <PropertyRef Name="unid" />
+          </Key>
+          <Property Name="unid" Type="Guid" Nullable="false" />
+          <Property Name="RoomID" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="RoomName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoomSecret" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="UserCount" Type="Int16" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_RoomDetail">
+          <Key>
+            <PropertyRef Name="RoomID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="RoomID" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserLevel" Type="Byte" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_User">
+          <Key>
+            <PropertyRef Name="unid" />
+            <PropertyRef Name="Email" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Secret" />
+            <PropertyRef Name="CreateDate" />
+            <PropertyRef Name="ModifyTime" />
+          </Key>
+          <Property Name="unid" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Secret" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="PartyManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_OrderList" EntityType="Self.T_OrderList" />
+          <EntitySet Name="T_Reference" EntityType="Self.T_Reference" />
+          <EntitySet Name="T_Room" EntityType="Self.T_Room" />
+          <EntitySet Name="T_RoomDetail" EntityType="Self.T_RoomDetail" />
+          <EntitySet Name="T_User" EntityType="Self.T_User" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PartyManagementModelStoreContainer" CdmEntityContainer="PartyManagementEntities">
+          <EntitySetMapping Name="T_OrderList">
+            <EntityTypeMapping TypeName="PartyManagementModel.T_OrderList">
+              <MappingFragment StoreEntitySet="T_OrderList">
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="OrderItem" ColumnName="OrderItem" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Sponsor" ColumnName="Sponsor" />
+                <ScalarProperty Name="CanceledTime" ColumnName="CanceledTime" />
+                <ScalarProperty Name="isServed" ColumnName="isServed" />
+                <ScalarProperty Name="isCanceled" ColumnName="isCanceled" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Reference">
+            <EntityTypeMapping TypeName="PartyManagementModel.T_Reference">
+              <MappingFragment StoreEntitySet="T_Reference">
+                <ScalarProperty Name="RID" ColumnName="RID" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="CategoryCode" ColumnName="CategoryCode" />
+                <ScalarProperty Name="ZHName" ColumnName="ZHName" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Room">
+            <EntityTypeMapping TypeName="PartyManagementModel.T_Room">
+              <MappingFragment StoreEntitySet="T_Room">
+                <ScalarProperty Name="unid" ColumnName="unid" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
+                <ScalarProperty Name="RoomSecret" ColumnName="RoomSecret" />
+                <ScalarProperty Name="UserCount" ColumnName="UserCount" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_RoomDetail">
+            <EntityTypeMapping TypeName="PartyManagementModel.T_RoomDetail">
+              <MappingFragment StoreEntitySet="T_RoomDetail">
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserLevel" ColumnName="UserLevel" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_User">
+            <EntityTypeMapping TypeName="PartyManagementModel.T_User">
+              <MappingFragment StoreEntitySet="T_User">
+                <ScalarProperty Name="unid" ColumnName="unid" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Secret" ColumnName="Secret" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,57 @@
+﻿@model List<RoomViewModel>
+
+<div class="card">
+    <div class="card-header">
+        搜尋結果
+    </div>
+    <div class="card-body overflow-x-scroll">
+        <table class="table table-responsive table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">包廂ID</th>
+                    <th class="d-none d-md-block" scope="col">包廂名稱</th>
+                    <th scope="col">包廂主</th>
+                    <th scope="col">人數</th>
+                    <th scope="col">功能</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ 
+                    var cnt = 1;
+                    if (Model == null || Model.Count == 0)
+                    {
+                        <tr>
+                            
+                            <td colspan="5" class="text-center">查無包廂</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach(RoomViewModel rm in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @cnt                                    
+                                </td>
+                                <td class="">
+                                    @rm.RoomID
+                                    <span class="d-md-none text-nowrap">@rm.RoomName</span>
+                                </td>
+                                <td class="d-none d-md-block">@rm.RoomName</td>
+                                <td>@rm.CreateUser</td>
+                                <td>@rm.UserCount</td>
+                                <td>
+                                    <span><i class="fas fa-plus-circle"></i></span>
+                                </td>
+                            </tr>
+                            
+                            cnt++;
+                        }
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 

@@ -1,0 +1,25 @@
+﻿@model PartyManagementSystem.ViewModels.RoomViewModel
+@{
+    ViewBag.Title = "RoomDetail";
+}
+<div class="container">
+    <h3>
+        @Model.RoomName (#@Model.RoomID )
+    </h3>
+</div>
+
+@section Scripts{
+    <script>
+        @if (ViewBag.ResultModel != null) {
+            var resultModel = ViewBag.ResultModel;
+            <text>
+        swal.Show(swal.Icon.error, "@resultModel.Message").then(() => {
+            location.href = "@Url.Action("Index","Room")";
+
+        });
+            </text>
+        }
+
+    </script> 
+
+}

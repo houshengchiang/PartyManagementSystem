@@ -1,0 +1,48 @@
+﻿@model List<RoomViewModel>
+
+<div class="card">
+    <div class="card-header">
+        搜尋結果
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">包廂ID</th>
+                    <th scope="col">包廂名稱</th>
+                    <th scope="col">包廂主</th>
+                    <th scope="col">人數</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ 
+                    var cnt = 1;
+                    if (Model == null || Model.Count == 0)
+                    {
+                        <tr>
+                            <td scope="row">@cnt</td>
+                            <td colspan="4">查無包廂</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach(RoomViewModel rm in Model)
+                        {
+                            <tr>
+                                <td>@cnt</td>
+                                <td>@rm.RoomID</td>
+                                <td>@rm.RoomName</td>
+                                <td>@rm.CreateUser</td>
+                                <td>人數</td>
+                            </tr>
+                            
+                            cnt++;
+                        }
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 

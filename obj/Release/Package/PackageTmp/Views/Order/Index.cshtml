@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container m-2">
+    <h2>餐點清單</h2>   
+</div>
+<hr />
+<div class="container">
+    <div class="row px-2">
+        <div class="col form-outline mb-3">
+            @Html.TextBox("Item", "", new { @id="item", @class = "form-control p-3", placeholder = "請輸入餐點名稱", required = "required" })
+            @Html.Label("", "餐點", new { @class = "form-label", @for = "UserID" })
+            <span class="text-danger error error-userid"></span>
+        </div>
+    </div>    
+    <div class="row px-2">
+        <div class="col-4 form-outline mb-3">
+            @Html.TextBox("Qty", "", null, new { @id="qty", @class = "form-control p-3", placeholder = "請輸入數量", type = "number", required = "required" })
+            @Html.Label("", "數量", new { @class = "form-label", @for = "UserID" })
+            <span class="text-danger error error-userid"></span>       
+        </div>
+        <div class="col-8 form-outline mb-3">
+            @Html.TextBox("UnitPrice", "", null, new { @class = "form-control p-3", placeholder = "請輸入單價", type= "number", required = "required" })
+            @Html.Label("", "價格", new { @class = "form-label", @for = "UserID" })
+            <span class="text-danger error error-userid"></span>
+        </div>
+    </div>
+    <div class="button-container">
+        <button id="btnSubmit" type="submit" class="btn btn-primary btn-block btnSubmit">送出</button>        
+    </div>
+</div>
+
+<script>
+    $("#btnSubmit").on("click", function (e) {
+        e.preventDefault();
+
+        swal.Show(swal.Icon.warning, "送出餐點 [" + $("#item").val() + "] 共" + $("#qty").val() + "份");
+
+
+    })
+</script>

@@ -1,0 +1,80 @@
+﻿@model RoomViewModel
+
+<div class="p-5 pb-2 mb-4 bg-light">
+    <h1>建立房間</h1>
+    <hr />
+    @using (Html.BeginForm("Create","Room",FormMethod.Post, new { id = "postForm" }))
+    {
+        <div class="container py-5">        
+            <div class="row mb-3">
+                <div class="col-12 col-md-12">
+                    @Html.Label("RoomID", "包廂ID", new { @class = "col-form-label fw-bold" })
+                    <label class="text-black-50">(選填)</label>
+                </div>
+                <div class="col-12 col-md-4">
+                    @Html.TextBoxFor(m => m.RoomID, new { @class = "form-control", placeholder = "請輸入 1-7 位數數字做房間ID (選填)", maxlength="7" })
+                </div>           
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 col-md-12">
+                    @Html.Label("RoomName", "包廂名稱", new { @class = "col-form-label fw-bold" })
+                </div>
+                <div class="col-12 col-md-4">
+                    @Html.TextBoxFor(m => m.RoomName, new { @class = "form-control", placeholder = "輸入房間名稱", required="required" })
+                </div>           
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 col-md-12">
+                    @Html.Label("RoomName", "包廂密碼", new { @class = "col-form-label fw-bold" })
+                    <label class="text-black-50">(選填)</label>
+                </div>
+                <div class="col-12 col-md-4">
+                    @Html.PasswordFor(m => m.Secret, new { @class = "form-control", placeholder = "輸入私人包廂密碼 (選填)" })
+                </div>
+            </div>
+            <hr />
+            <div class="button-container">
+                <button id="btnCreate" type="submit" class="btn btn-primary">建立</button>
+            </div>
+        </div>
+    }
+</div>
+
+<script>    
+
+    $("#RoomID").keyup(function (e) {        
+        var $this = $(this);
+        var roomID = $this.val();
+        $this.val(roomID.replaceAll(/[^0-9]/g, ""));
+    })
+
+    // 建立包廂
+    $("#postForm").on("submit", function (e) {
+        e.preventDefault();
+
+        
+
+        var $form = $(this);
+        var formdata = $form.serializeArray();
+
+        $.post({
+            url: "@(Url.Action("Create", "Room"))",
+            data: formdata,
+            success: (result) => {
+                if (result.Success) {
+                    console.log("Success!!")
+                    swal.Show(swal.Icon.success, "成功加入")
+                        .then(() => {
+                            location.href="@Url.Action("Index","Room")"
+                        })
+                } else {
+                    
+                    console.warn("false")
+                }
+            }
+        })
+    })
+
+    
+    
+</script>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartyManagementSystem", "PartyManagementSystem.csproj", "{79A05372-9783-46C9-BB16-7E0806B2E46E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79A05372-9783-46C9-BB16-7E0806B2E46E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A05372-9783-46C9-BB16-7E0806B2E46E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A05372-9783-46C9-BB16-7E0806B2E46E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A05372-9783-46C9-BB16-7E0806B2E46E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A2966C25-0074-48E8-9CC2-FF911957010C}
+	EndGlobalSection
+EndGlobal

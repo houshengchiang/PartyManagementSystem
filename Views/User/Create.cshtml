@@ -1,0 +1,109 @@
+﻿@model UserViewModel
+@{
+    ViewBag.Title = "Create";    
+}
+
+<h2>建立帳號</h2>
+
+@using (Html.BeginForm("Create", "User", FormMethod.Post, new { id = "postForm" }))
+{
+
+<div class="container py-5">
+    <div class="row mb-3 mx-4">
+        <div class="form-outline col-12 col-md-4 mb-3">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control p-3", type = "email", placeholder = "請輸入Email", required = "required" })
+            @Html.Label("Email", "Email", new { @class = "form-label", @for = "Email" })
+            <span class="text-danger error error-email"></span>
+        </div>
+    </div>
+    <div class="row mb-3 mx-4">
+        <div class="form-outline col-12 col-md-4 mb-3">
+            @Html.TextBoxFor(m => m.UserID, new { @class = "form-control p-3", type = "email", placeholder = "請輸入使用者帳號", required = "required" })
+            @Html.Label("UserID", "UserID", new { @class = "form-label", @for = "UserID" })
+            <span class="text-danger error error-userid"></span>
+        </div>
+    </div>
+    <div class="row mb-3 mx-4">
+        <div class="form-outline col-12 col-md-4 mb-3">
+            @Html.TextBoxFor(m => m.Secret, new { @class = "form-control p-3", type = "password", placeholder = "請輸入密碼", required = "required" })
+            @Html.Label("Secret", "密碼", new { @class = "form-label", @for = "Secret" })
+            <span class="text-danger error error-Secret"></span>
+        </div>
+    </div>
+    <div class="row mb-3 mx-4">
+        <div class="form-outline col-12 col-md-4 mb-3">
+            <input id="SecretConfirm" type="password" class="form-control p-3" placeholder="請再輸入一次密碼" required />
+            @Html.Label("SecretConfirm", "密碼確認", new { @class = "form-label", @for = "SecretConfirm" })
+            <span class="text-danger error error-secret-confirm"></span>
+        </div>
+    </div>
+    <div class="row mb-3 mx-4">
+        <div class="form-outline col-12 col-md-4 mb-3">
+            @Html.TextBoxFor(m => m.Nickname, new { @class = "form-control p-3", placeholder = "該怎麼稱呼呢" })
+            @Html.Label("Nickname", "暱稱", new { @class = "form-label", @for = "Nickname" })
+            <span class="text-danger error error-userid"></span>
+        </div>
+    </div>
+    <hr />
+    <div class="button-container">
+        <button id="btnCreate" type="submit" class="btn btn-primary">加入會員</button>
+        <button id="btnCancel" type="button" class="btn btn-secondary">取消</button>
+    </div>
+</div>
+
+}
+
+<script>
+    $(function () {        
+
+        // 送出表單
+        $("#postForm").on("submit", function (e) {
+            e.preventDefault();
+
+            var $this = $(this);
+
+            var fd = $this.serializeArray();
+
+            if (pwdValidation() == false) {
+                console.log("密碼不一致")
+                return;
+            }
+
+            $.post({
+                url: "@Url.Action("Create", "User")",
+                data: fd,
+                success: function (res) {
+
+                    swal.Show(res.Success ? swal.Icon.success : swal.Icon.error, res.Message);
+
+                    //if (res.Success) {
+                    //} else {
+
+                    //}
+                }
+            })
+
+        })
+
+        $("#SecretConfirm").blur(function (e) {
+            
+
+        })
+
+        function pwdValidation() {
+            var $secret1 = $("#Secret").val();
+            var $secret2 = $("#SecretConfirm").val();
+
+            console.log(`${$secret1} Len = ${$secret1.length},${$secret2} Len = ${$secret2.length}`)
+            console.log($secret1 != $secret2)
+
+            if ($secret1 != $secret2) {
+                console.log("Failed secret validation!");
+                return false;
+            }
+            console.log("pass secret validation!");
+        }
+
+    })
+</script>
+

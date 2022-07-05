@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PartyManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="T_OrderList">
+    <Key>
+      <PropertyRef Name="SerialNo" />
+    </Key>
+    <Property Name="SerialNo" Type="Int64" Nullable="false" />
+    <Property Name="OrderItem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="RoomId" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Sponsor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CanceledTime" Type="DateTime" Precision="3" />
+    <Property Name="isServed" Type="Boolean" />
+    <Property Name="isCanceled" Type="Boolean" />
+    <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UpdateTime" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="UpdateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="T_Reference">
+    <Key>
+      <PropertyRef Name="RID" />
+    </Key>
+    <Property Name="RID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CategoryCode" Type="Int16" Nullable="false" />
+    <Property Name="ZHName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Code" Type="Int16" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_Room">
+    <Key>
+      <PropertyRef Name="unid" />
+    </Key>
+    <Property Name="unid" Type="Guid" Nullable="false" />
+    <Property Name="RoomID" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="RoomName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RoomSecret" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="UserCount" Type="Int16" />
+    <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_RoomDetail">
+    <Key>
+      <PropertyRef Name="RoomID" />
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="RoomID" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserLevel" Type="Byte" Nullable="false" />
+    <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_User">
+    <Key>
+      <PropertyRef Name="unid" />
+      <PropertyRef Name="Email" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="Secret" />
+      <PropertyRef Name="CreateDate" />
+      <PropertyRef Name="ModifyTime" />
+    </Key>
+    <Property Name="unid" Type="Guid" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Secret" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityContainer Name="PartyManagementEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="T_OrderList" EntityType="Self.T_OrderList" />
+    <EntitySet Name="T_Reference" EntityType="Self.T_Reference" />
+    <EntitySet Name="T_Room" EntityType="Self.T_Room" />
+    <EntitySet Name="T_RoomDetail" EntityType="Self.T_RoomDetail" />
+    <EntitySet Name="T_User" EntityType="Self.T_User" />
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,61 @@
+﻿@model UserViewModel
+@{
+    ViewBag.Title = "SignIn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <div class="row justify-content-center my-5">
+        <div class="col-md-7 col-xl-8 d-none d-sm-block">
+            <div class="m-5">
+                <img class="img-fluid" src="https://img.freepik.com/free-vector/music-bar-pub-cartoon-empty-interior-with-illuminated-signboard_1441-3501.jpg?size=626&ext=jpg&ga=GA1.1.1546472224.1644105600" />  
+            </div>
+        </div>
+        <div class="col-md-5 col-xl-4 my-auto">
+            <form id="postForm">
+                <h1>會員登入</h1>
+                <hr />
+                <div class="form-outline mb-3">
+                    @Html.TextBoxFor(m => m.UserID, new { @class = "form-control p-3", placeholder = "請輸入使用者帳號", required = "required" })
+                    @Html.Label("UserID", "帳號", new { @class = "form-label", @for = "UserID" })
+                    <span class="text-danger error error-userid"></span>
+                </div>
+                <div class="form-outline mb-3">
+                    @Html.PasswordFor(m => m.Secret, new { @class = "form-control p-3", placeholder = "請輸入密碼", required = "required" })
+                    @Html.Label("Secret", "密碼", new { @class = "form-label", @for = "Secret" })
+                </div>
+                <div class="button-container">
+                    <button id="btnLogin" type="submit" class="btn btn-primary btn-block">登入</button>
+                    @*<button type="submit" class="btn btn-primary btn-block">Sign in</button>*@
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btnLogin").on("click", function (e) {
+        e.preventDefault();
+
+        var formData = new FormData($("#postForm")[0]);
+
+        $.post({
+            url: "@Url.Action("SignIn", "Security")",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (res) => {
+                console.log(res)
+                if (res.Success) {
+                    swal.Show(swal.Icon.success, res.Message).then(() => {
+                        location.href = "@Url.Action("Index","Room")" + "?userId=" + res.ReturnObject["userId"];
+                    })
+                } else {
+                    swal.Show(swal.Icon.error, res.Message)
+                }
+               
+            }
+        })
+    })
+</script>
